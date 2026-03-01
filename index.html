@@ -27,7 +27,6 @@
       background-attachment: fixed;
     }
 
-    /* Очень лёгкое затемнение — не перекрывает красоту фото */
     body::before {
       content: '';
       position: fixed;
@@ -37,7 +36,6 @@
       z-index: 0;
     }
 
-    /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
@@ -45,7 +43,6 @@
       border-radius: 10px;
     }
 
-    /* ── PROGRESS BAR ── */
     .progress-bar {
       position: fixed;
       top: 0; left: 0;
@@ -55,19 +52,16 @@
       transition: width 0.1s linear;
     }
 
-    /* ── GLASS CARD ── */
     .card {
       position: relative;
       z-index: 1;
       width: 100%; max-width: 680px;
 
-      /* Очень прозрачная подложка — фон хорошо виден сквозь стекло */
       background: rgba(255, 250, 225, 0.10);
       border: 1px solid rgba(255, 255, 255, 0.40);
       border-radius: 24px;
       padding: 3rem 3.5rem;
 
-      /* blur = матовое стекло, фон виден но слегка замылен */
       backdrop-filter: blur(14px) saturate(140%);
       -webkit-backdrop-filter: blur(14px) saturate(140%);
 
@@ -83,7 +77,6 @@
       to   { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Солнечный блик по верхнему краю */
     .card::before {
       content: '';
       position: absolute;
@@ -93,7 +86,6 @@
       border-radius: 50%;
     }
 
-    /* ── TAG ── */
     .tag {
       display: inline-block;
       font-size: 0.7rem; font-weight: 500;
@@ -104,13 +96,11 @@
       padding: 0.3em 0.9em; border-radius: 100px;
       margin-bottom: 1.6rem;
     }
-
-    /* ── HEADINGS ── */
+    
     h1 {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1.8rem, 4vw, 2.5rem);
       font-weight: 300; line-height: 1.2;
-      /* Глубокий тёмно-коричневый — максимальный контраст на золотом */
       color: #1c1000;
       letter-spacing: -0.01em;
       margin-bottom: 0.4rem;
@@ -129,7 +119,6 @@
       margin: 2rem 0 0.9rem;
     }
 
-    /* ── META ── */
     .meta {
       display: flex; align-items: center; gap: 0.8rem;
       margin-bottom: 2rem;
@@ -143,16 +132,13 @@
       border-radius: 50%;
     }
 
-    /* ── DIVIDER ── */
     .divider {
       width: 48px; height: 1px;
       background: linear-gradient(90deg, #a07020, transparent);
       margin-bottom: 1.8rem; opacity: 0.65;
     }
 
-    /* ── BODY TEXT ── */
     p {
-      /* Тёмно-коричневый — отлично читается на золотисто-зелёном */
       color: rgba(25, 14, 0, 0.88);
       font-size: 0.95rem; line-height: 1.85;
       margin-bottom: 1.2rem;
@@ -170,7 +156,6 @@
       font-style: italic;
     }
 
-    /* ── BLOCKQUOTE ── */
     blockquote {
       border-left: 2px solid rgba(140, 100, 20, 0.45);
       padding: 0.8rem 0 0.8rem 1.4rem;
@@ -181,7 +166,6 @@
       line-height: 1.6;
     }
 
-    /* ── CARD FOOTER ── */
     .card-footer {
       display: flex; align-items: center; justify-content: space-between;
       margin-top: 2rem; padding-top: 1.5rem;
@@ -242,7 +226,7 @@
     </blockquote>
 
     <p>
-      Японская эстетика <em>ма</em> (間) описывает не пустоту, а насыщенное пространство — промежуток, в котором форма обретает значение. Архитектор не строит стены; он формирует воздух между ними. Поэт не выбирает слова; он решает, какие слова оставить несказанными.
+      Японская эстетика <em>ма</em> описывает не пустоту, а насыщенное пространство — промежуток, в котором форма обретает значение. Архитектор не строит стены; он формирует воздух между ними. Поэт не выбирает слова; он решает, какие слова оставить несказанными.
     </p>
 
     <p>
