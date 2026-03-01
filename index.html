@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glassmorphism</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 4rem 2rem 6rem;
+      font-family: 'DM Sans', sans-serif;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      background-image: url('test2.jpg');
+
+      background-size: cover;
+      background-position: center center;
+      background-attachment: fixed;
+    }
+
+    /* Очень лёгкое затемнение — не перекрывает красоту фото */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 12, 0, 0.12);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(160, 120, 40, 0.30);
+      border-radius: 10px;
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px; width: 0%;
+      background: linear-gradient(90deg, #7a5c10, #e8c840);
+      z-index: 100;
+      transition: width 0.1s linear;
+    }
+
+    /* ── GLASS CARD ── */
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%; max-width: 680px;
+
+      /* Очень прозрачная подложка — фон хорошо виден сквозь стекло */
+      background: rgba(255, 250, 225, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.40);
+      border-radius: 24px;
+      padding: 3rem 3.5rem;
+
+      /* blur = матовое стекло, фон виден но слегка замылен */
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+
+      box-shadow:
+        0 8px 52px rgba(50, 30, 0, 0.20),
+        0 1px 0 rgba(255, 255, 255, 0.55) inset,
+        0 -1px 0 rgba(0, 0, 0, 0.04) inset;
+      animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Солнечный блик по верхнему краю */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 240, 160, 0.65), transparent);
+      border-radius: 50%;
+    }
+
+    /* ── TAG ── */
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: #3d2600;
+      background: rgba(220, 170, 40, 0.18);
+      border: 1px solid rgba(160, 110, 20, 0.30);
+      padding: 0.3em 0.9em; border-radius: 100px;
+      margin-bottom: 1.6rem;
+    }
+
+    /* ── HEADINGS ── */
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 300; line-height: 1.2;
+      /* Глубокий тёмно-коричневый — максимальный контраст на золотом */
+      color: #1c1000;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 1px 8px rgba(255, 230, 150, 0.25);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: #5a3800;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 400;
+      color: #1c1000;
+      margin: 2rem 0 0.9rem;
+    }
+
+    /* ── META ── */
+    .meta {
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 2rem;
+      color: rgba(50, 30, 0, 0.65);
+      font-size: 0.78rem; letter-spacing: 0.04em;
+    }
+
+    .dot {
+      width: 3px; height: 3px;
+      background: rgba(80, 50, 0, 0.45);
+      border-radius: 50%;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 48px; height: 1px;
+      background: linear-gradient(90deg, #a07020, transparent);
+      margin-bottom: 1.8rem; opacity: 0.65;
+    }
+
+    /* ── BODY TEXT ── */
+    p {
+      /* Тёмно-коричневый — отлично читается на золотисто-зелёном */
+      color: rgba(25, 14, 0, 0.88);
+      font-size: 0.95rem; line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    p:last-of-type { margin-bottom: 0; }
+
+    p strong {
+      color: #100800;
+      font-weight: 600;
+    }
+
+    p em {
+      color: #5a3800;
+      font-style: italic;
+    }
+
+    /* ── BLOCKQUOTE ── */
+    blockquote {
+      border-left: 2px solid rgba(140, 100, 20, 0.45);
+      padding: 0.8rem 0 0.8rem 1.4rem;
+      margin: 1.6rem 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic; font-size: 1.1rem;
+      color: rgba(60, 36, 0, 0.78);
+      line-height: 1.6;
+    }
+
+    /* ── CARD FOOTER ── */
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 2rem; padding-top: 1.5rem;
+      border-top: 1px solid rgba(120, 80, 10, 0.18);
+    }
+
+    .avatar { display: flex; align-items: center; gap: 0.75rem; }
+
+    .avatar-ring {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(200, 160, 50, 0.18);
+      border: 1px solid rgba(150, 100, 20, 0.40);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem; color: #4a2e00;
+    }
+
+    .avatar-info { line-height: 1.3; }
+    .avatar-name { font-size: 0.8rem; color: #1c1000; font-weight: 500; }
+    .avatar-role { font-size: 0.72rem; color: rgba(60, 36, 0, 0.60); }
+
+    .read-more {
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: #4a2e00; text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: gap 0.3s ease;
+    }
+    .read-more:hover { gap: 0.7rem; }
+    .read-more::after { content: '→'; }
+  </style>
+</head>
+<body>
+
+  <div class="progress-bar" id="progressBar"></div>
+
+  <article class="card">
+    <div class="tag">Философия · 6 мин чтения</div>
+
+    <h1>Тишина как язык: <em>искусство паузы</em></h1>
+
+    <div class="meta">
+      <span>18 февраля 2025</span>
+      <div class="dot"></div>
+      <span>Арина Соколова</span>
+      <div class="dot"></div>
+      <span>1 200 слов</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <p>
+      Мы живём в эпоху, одержимой звуком. Подкасты заполняют дорогу на работу, уведомления прерывают мысль на полуслове, а тишина воспринимается как неловкость, требующая немедленного заполнения. <strong>Но что если именно в паузе скрыта наибольшая плотность смысла?</strong>
+    </p>
+
+    <blockquote>
+      «Музыка — это не ноты. Музыка — это тишина между ними.»<br>
+      — Клод Дебюсси
+    </blockquote>
+
+    <p>
+      Японская эстетика <em>ма</em> (間) описывает не пустоту, а насыщенное пространство — промежуток, в котором форма обретает значение. Архитектор не строит стены; он формирует воздух между ними. Поэт не выбирает слова; он решает, какие слова оставить несказанными.
+    </p>
+
+    <p>
+      Нейронауки подтверждают интуицию художников: во время тишины мозг не отдыхает, а интенсивно работает — интегрирует опыт, укрепляет связи, порождает инсайты. <strong>Дефолтная сеть</strong> активируется именно тогда, когда мы перестаём потреблять и начинаем просто быть.
+    </p>
+
+    <p>
+      Научиться молчать — значит научиться слышать себя. Это не пассивность, а высшая форма внимания.
+    </p>
+
+    <h2>Тело, которое помнит</h2>
+
+    <p>
+      Немецкий философ Мартин Хайдеггер писал о <em>Gelassenheit</em> — «отпускании», готовности позволить вещам быть тем, что они есть, без принуждения их к смыслу. Современный человек разучился отпускать: он заполняет каждую щель в пространстве-времени контентом, словно тишина — это признание поражения.
+    </p>
+
+    <p>
+      Между тем тело накапливает усталость от постоянного шума задолго до того, как разум это осознаёт. Кортизол — гормон стресса — остаётся повышенным даже в «фоновом» шуме опен-спейса. Исследования показывают: <strong>двухминутная тишина снижает артериальное давление эффективнее, чем расслабляющая музыка.</strong>
+    </p>
+
+    <blockquote>
+      «В тишине можно услышать сердцебиение мира — если перестать заглушать его своим.»
+    </blockquote>
+
+    <h2>Практика молчания</h2>
+
+    <p>
+      Монастырские традиции — от дзен-буддийских до трапистских — всегда знали то, что нейронауки открыли заново: молчание требует дисциплины. Оно не наступает само по себе. Это навык, который тренируется, как мышца.
+    </p>
+
+    <p>
+      Начните с малого: пять минут утром без телефона и музыки. Просто сидите с кофе и наблюдайте, как блуждает ум. Поначалу это невыносимо — мозг требует стимуляции. Но постепенно в паузах начинает проступать нечто важное: ваш собственный голос, не заглушённый чужими.
+    </p>
+
+    <p>
+      Тишина — это не отсутствие. Это присутствие в своей наиболее чистой форме. И, возможно, единственное пространство, где можно по-настоящему встретить самого себя.
+    </p>
+
+    <div class="card-footer">
+      <div class="avatar">
+        <div class="avatar-ring">А</div>
+        <div class="avatar-info">
+          <div class="avatar-name">Арина Соколова</div>
+          <div class="avatar-role">Философ, эссеист</div>
+        </div>
+      </div>
+      <a href="#" class="read-more">Читать далее</a>
+    </div>
+  </article>
+
+  <script>
+    const bar = document.getElementById('progressBar');
+    window.addEventListener('scroll', () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+    });
+  </script>
+
+</body>
+</html>
