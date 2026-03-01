@@ -15,16 +15,22 @@
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 4rem 2rem 6rem;
+      padding: 3rem 1.25rem 5rem;
       font-family: 'DM Sans', sans-serif;
       overflow-y: auto;
       overflow-x: hidden;
-
       background-image: url('test2.jpg');
-
       background-size: cover;
       background-position: center center;
       background-attachment: fixed;
+    }
+
+    /* На мобильных background-attachment: fixed глючит в Safari — отключаем */
+    @media (max-width: 768px) {
+      body {
+        background-attachment: scroll;
+        padding: 1.5rem 1rem 4rem;
+      }
     }
 
     body::before {
@@ -36,6 +42,7 @@
       z-index: 0;
     }
 
+    /* ── SCROLLBAR ── */
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
@@ -43,6 +50,7 @@
       border-radius: 10px;
     }
 
+    /* ── PROGRESS BAR ── */
     .progress-bar {
       position: fixed;
       top: 0; left: 0;
@@ -52,24 +60,39 @@
       transition: width 0.1s linear;
     }
 
+    /* ── GLASS CARD ── */
     .card {
       position: relative;
       z-index: 1;
-      width: 100%; max-width: 680px;
-
+      width: 100%;
+      max-width: 680px;
       background: rgba(255, 250, 225, 0.10);
       border: 1px solid rgba(255, 255, 255, 0.40);
       border-radius: 24px;
       padding: 3rem 3.5rem;
-
       backdrop-filter: blur(14px) saturate(140%);
       -webkit-backdrop-filter: blur(14px) saturate(140%);
-
       box-shadow:
         0 8px 52px rgba(50, 30, 0, 0.20),
         0 1px 0 rgba(255, 255, 255, 0.55) inset,
         0 -1px 0 rgba(0, 0, 0, 0.04) inset;
       animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    /* Планшет */
+    @media (max-width: 768px) {
+      .card {
+        padding: 2.2rem 2rem;
+        border-radius: 20px;
+      }
+    }
+
+    /* Телефон */
+    @media (max-width: 480px) {
+      .card {
+        padding: 1.6rem 1.25rem;
+        border-radius: 18px;
+      }
     }
 
     @keyframes fadeUp {
@@ -86,6 +109,7 @@
       border-radius: 50%;
     }
 
+    /* ── TAG ── */
     .tag {
       display: inline-block;
       font-size: 0.7rem; font-weight: 500;
@@ -94,12 +118,17 @@
       background: rgba(220, 170, 40, 0.18);
       border: 1px solid rgba(160, 110, 20, 0.30);
       padding: 0.3em 0.9em; border-radius: 100px;
-      margin-bottom: 1.6rem;
+      margin-bottom: 1.4rem;
     }
-    
+
+    @media (max-width: 480px) {
+      .tag { font-size: 0.65rem; }
+    }
+
+    /* ── HEADINGS ── */
     h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-size: clamp(1.5rem, 6vw, 2.5rem);
       font-weight: 300; line-height: 1.2;
       color: #1c1000;
       letter-spacing: -0.01em;
@@ -114,16 +143,21 @@
 
     h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem; font-weight: 400;
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
+      font-weight: 400;
       color: #1c1000;
-      margin: 2rem 0 0.9rem;
+      margin: 1.8rem 0 0.8rem;
     }
 
+    /* ── META ── */
     .meta {
-      display: flex; align-items: center; gap: 0.8rem;
-      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;       /* перенос на маленьких экранах */
+      gap: 0.6rem;
+      margin-bottom: 1.8rem;
       color: rgba(50, 30, 0, 0.65);
-      font-size: 0.78rem; letter-spacing: 0.04em;
+      font-size: 0.75rem; letter-spacing: 0.04em;
     }
 
     .dot {
@@ -132,66 +166,77 @@
       border-radius: 50%;
     }
 
-    .divider {
-      width: 48px; height: 1px;
-      background: linear-gradient(90deg, #a07020, transparent);
-      margin-bottom: 1.8rem; opacity: 0.65;
+    /* На очень узких — скрываем разделители */
+    @media (max-width: 360px) {
+      .dot { display: none; }
+      .meta { gap: 0.3rem 0.8rem; }
     }
 
+    /* ── DIVIDER ── */
+    .divider {
+      width: 40px; height: 1px;
+      background: linear-gradient(90deg, #a07020, transparent);
+      margin-bottom: 1.6rem; opacity: 0.65;
+    }
+
+    /* ── BODY TEXT ── */
     p {
       color: rgba(25, 14, 0, 0.88);
-      font-size: 0.95rem; line-height: 1.85;
-      margin-bottom: 1.2rem;
+      font-size: clamp(0.875rem, 2.5vw, 0.95rem);
+      line-height: 1.85;
+      margin-bottom: 1.1rem;
     }
 
     p:last-of-type { margin-bottom: 0; }
 
-    p strong {
-      color: #100800;
-      font-weight: 600;
-    }
+    p strong { color: #100800; font-weight: 600; }
+    p em { color: #5a3800; font-style: italic; }
 
-    p em {
-      color: #5a3800;
-      font-style: italic;
-    }
-
+    /* ── BLOCKQUOTE ── */
     blockquote {
       border-left: 2px solid rgba(140, 100, 20, 0.45);
-      padding: 0.8rem 0 0.8rem 1.4rem;
-      margin: 1.6rem 0;
+      padding: 0.7rem 0 0.7rem 1.2rem;
+      margin: 1.4rem 0;
       font-family: 'Cormorant Garamond', serif;
-      font-style: italic; font-size: 1.1rem;
+      font-style: italic;
+      font-size: clamp(1rem, 3vw, 1.1rem);
       color: rgba(60, 36, 0, 0.78);
       line-height: 1.6;
     }
 
+    /* ── CARD FOOTER ── */
     .card-footer {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
       margin-top: 2rem; padding-top: 1.5rem;
       border-top: 1px solid rgba(120, 80, 10, 0.18);
     }
 
-    .avatar { display: flex; align-items: center; gap: 0.75rem; }
+    .avatar { display: flex; align-items: center; gap: 0.65rem; }
 
     .avatar-ring {
-      width: 36px; height: 36px; border-radius: 50%;
+      width: 34px; height: 34px; border-radius: 50%;
       background: rgba(200, 160, 50, 0.18);
       border: 1px solid rgba(150, 100, 20, 0.40);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.95rem; color: #4a2e00;
+      flex-shrink: 0;
     }
 
     .avatar-info { line-height: 1.3; }
     .avatar-name { font-size: 0.8rem; color: #1c1000; font-weight: 500; }
-    .avatar-role { font-size: 0.72rem; color: rgba(60, 36, 0, 0.60); }
+    .avatar-role { font-size: 0.7rem; color: rgba(60, 36, 0, 0.60); }
 
     .read-more {
-      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
       color: #4a2e00; text-decoration: none;
       display: flex; align-items: center; gap: 0.4rem;
       transition: gap 0.3s ease;
+      white-space: nowrap;
     }
     .read-more:hover { gap: 0.7rem; }
     .read-more::after { content: '→'; }
